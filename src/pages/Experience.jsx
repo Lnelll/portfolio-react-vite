@@ -1,25 +1,38 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+// Import gambar dari folder assets
+import imgCode from "../assets/code.jpg";
+import imgGame from "../assets/game.png";
+
 function Experience() {
   const [daftarPengalaman, setDaftarPengalaman] = useState(() => {
-  const dataLokal = localStorage.getItem("dataPengalaman");
-  const dataParsed = dataLokal ? JSON.parse(dataLokal) : [];
-  
-  // Jika data kosong atau array-nya tidak ada isi, masukkan data riil Anda
-  if (dataParsed.length === 0) {
-    const dataAwal = [
-      { id: 1, kategori: "PROJECT", deskripsi: "code login" },
-      { id: 2, kategori: "PROJECT", deskripsi: "game rpg puzzle" }
-    ];
-    localStorage.setItem("dataPengalaman", JSON.stringify(dataAwal));
-    return dataAwal;
-  }
-  
-  return dataParsed;
-});
+    const dataLokal = localStorage.getItem("dataPengalaman");
+    const dataParsed = dataLokal ? JSON.parse(dataLokal) : [];
+    
+    // Jika data kosong, gunakan data awal dengan referensi gambar yang diimport
+    if (dataParsed.length === 0) {
+      const dataAwal = [
+        { 
+          id: 1, 
+          kategori: "PROJECT", 
+          deskripsi: "code login",
+          gambar: imgCode 
+        },
+        { 
+          id: 2, 
+          kategori: "PROJECT", 
+          deskripsi: "game rpg puzzle",
+          gambar: imgGame
+        }
+      ];
+      localStorage.setItem("dataPengalaman", JSON.stringify(dataAwal));
+      return dataAwal;
+    }
+    
+    return dataParsed;
+  });
 
-  // Sinkronisasi setiap kali daftarPengalaman berubah agar tetap tersimpan
   useEffect(() => {
     localStorage.setItem("dataPengalaman", JSON.stringify(daftarPengalaman));
   }, [daftarPengalaman]);
