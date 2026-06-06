@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-// Import gambar dari folder assets
-import imgCode from "../assets/code.jpg";
+import imgCode from "../assets/code.png"; 
 import imgGame from "../assets/game.png";
 
 function Experience() {
@@ -10,7 +8,6 @@ function Experience() {
     const dataLokal = localStorage.getItem("dataPengalaman");
     const dataParsed = dataLokal ? JSON.parse(dataLokal) : [];
     
-    // Jika data kosong, gunakan data awal dengan referensi gambar yang diimport
     if (dataParsed.length === 0) {
       const dataAwal = [
         { 
@@ -29,13 +26,16 @@ function Experience() {
       localStorage.setItem("dataPengalaman", JSON.stringify(dataAwal));
       return dataAwal;
     }
-    
     return dataParsed;
   });
 
   useEffect(() => {
     localStorage.setItem("dataPengalaman", JSON.stringify(daftarPengalaman));
   }, [daftarPengalaman]);
+
+  // ... sisa komponen (containerVariants, itemVariants, dan return) tetap sama
+  // (Pastikan struktur return Anda sesuai dengan yang sudah kita buat sebelumnya)
+  // ...
 
   const containerVariants = {
     hidden: { opacity: 0 },
