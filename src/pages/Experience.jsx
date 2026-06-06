@@ -3,28 +3,21 @@ import { motion } from "framer-motion";
 
 function Experience() {
   const [daftarPengalaman, setDaftarPengalaman] = useState(() => {
-    const dataLokal = localStorage.getItem("dataPengalaman");
-    
-    // Jika data di localStorage ada, gunakan itu.
-    // Jika kosong, masukkan data awal riil Anda agar halaman tidak kosong saat pertama dibuka.
-    if (dataLokal) {
-      return JSON.parse(dataLokal);
-    } else {
-      const dataAwal = [
-        { 
-          id: 1, 
-          kategori: "PROJECT", 
-          deskripsi: "code login" 
-        },
-        { 
-          id: 2, 
-          kategori: "PROJECT", 
-          deskripsi: "game rpg puzzle" 
-        }
-      ];
-      return dataAwal;
-    }
-  });
+  const dataLokal = localStorage.getItem("dataPengalaman");
+  const dataParsed = dataLokal ? JSON.parse(dataLokal) : [];
+  
+  // Jika data kosong atau array-nya tidak ada isi, masukkan data riil Anda
+  if (dataParsed.length === 0) {
+    const dataAwal = [
+      { id: 1, kategori: "PROJECT", deskripsi: "code login" },
+      { id: 2, kategori: "PROJECT", deskripsi: "game rpg puzzle" }
+    ];
+    localStorage.setItem("dataPengalaman", JSON.stringify(dataAwal));
+    return dataAwal;
+  }
+  
+  return dataParsed;
+});
 
   // Sinkronisasi setiap kali daftarPengalaman berubah agar tetap tersimpan
   useEffect(() => {
