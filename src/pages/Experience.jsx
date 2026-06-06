@@ -1,11 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 function Experience() {
   const [daftarPengalaman, setDaftarPengalaman] = useState(() => {
     const dataLokal = localStorage.getItem("dataPengalaman");
-    return dataLokal ? JSON.parse(dataLokal) : [];
+    
+    // Jika data di localStorage ada, gunakan itu.
+    // Jika kosong, masukkan data awal riil Anda agar halaman tidak kosong saat pertama dibuka.
+    if (dataLokal) {
+      return JSON.parse(dataLokal);
+    } else {
+      const dataAwal = [
+        { 
+          id: 1, 
+          kategori: "PROJECT", 
+          deskripsi: "code login" 
+        },
+        { 
+          id: 2, 
+          kategori: "PROJECT", 
+          deskripsi: "game rpg puzzle" 
+        }
+      ];
+      return dataAwal;
+    }
   });
+
+  // Sinkronisasi setiap kali daftarPengalaman berubah agar tetap tersimpan
+  useEffect(() => {
+    localStorage.setItem("dataPengalaman", JSON.stringify(daftarPengalaman));
+  }, [daftarPengalaman]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -39,7 +63,6 @@ function Experience() {
                 <span className="badge">{item.kategori}</span>
                 <p style={{ marginTop: '12px', color: '#e2e8f0', marginBottom: '15px' }}>{item.deskripsi}</p>
                 
-                {/* Menampilkan Dokumentasi Foto jika ada */}
                 {item.gambar && (
                   <img 
                     src={item.gambar} 
